@@ -1,5 +1,7 @@
-## Next.js App Router Course - Starter
+## nextjs 中文教程
+https://qufei1993.github.io/nextjs-learn-cn/chapter6
 
-This is the starter template for the Next.js App Router Course. It contains the starting code for the dashboard application.
+## 创建 Vercel 账户
+[vercel.com/signup ](https://vercel.com/signup)
 
-For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
+
