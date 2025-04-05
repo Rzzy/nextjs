@@ -2,14 +2,15 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
 import { z } from 'zod';
-import { sql } from '@vercel/postgres'; // 这里需要注意！！！
+import postgres from 'postgres';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
- 
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+
 async function getUser(email: string): Promise<User | undefined> {
   try {
-    const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
-    return user.rows[0];
+    const user = await sql`SELECT * FROM users WHERE email=${email}`;
+    return user[0] as Promise<User | undefined> ;
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
@@ -30,6 +31,7 @@ export const { auth, signIn, signOut } = NextAuth({
           const user = await getUser(email);
           if (!user) return null;
           const passwordsMatch = await bcrypt.compare(password, user.password);
+          console.log(passwordsMatch, 'passwordsMatch')
           if (passwordsMatch) return user;
         }
         console.log('Invalid credentials');
