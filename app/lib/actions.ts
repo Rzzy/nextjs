@@ -1,6 +1,6 @@
 'use server';
 import { z } from 'zod';
-import { sql } from '@vercel/postgres'; // 这里需要注意
+import { sql } from './sql-hack';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
